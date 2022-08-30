@@ -3,8 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
-apply from: rootProject.file('maven.gradle')
+apply from: 'maven.gradle'
 
 android {
     compileSdk 32
@@ -17,9 +18,9 @@ android {
         consumerProguardFiles "consumer-rules.pro"
 
         // Arouter路由配置
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
             }
         }
     }
@@ -49,6 +50,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // Arouter
-    implementation("com.alibaba:arouter-api:1.5.2")
-    annotationProcessor("com.alibaba:arouter-compiler:1.5.2")
+    api("com.alibaba:arouter-api:1.5.2")
+    kapt("com.alibaba:arouter-compiler:1.5.2")
 }
